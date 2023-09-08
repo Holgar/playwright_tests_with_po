@@ -1,25 +1,31 @@
-const { BaseSwagLabPage } = require('./BaseSwagLab.page');
+const { BaseSwagLabPage } = require("./BaseSwagLab.page");
 
 export class ShopingCartPage extends BaseSwagLabPage {
-    url = '/cart.html';
+  url = "/cart.html";
 
-    cartItemSelector = '.cart_item';
+  cartItemSelector = ".cart_item";
 
-    removeItemSelector = '[id^="remove"]';
+  removeItemSelector = '[id^="remove"]';
 
-    get headerTitle() { return this.page.locator('.title'); }
+  get headerTitle() {
+    return this.page.locator(".title");
+  }
 
-    get cartItems() { return this.page.locator(this.cartItemSelector); }
+  get cartItems() {
+    return this.page.locator(this.cartItemSelector);
+  }
 
-    // async below added to show the function returns a promise
-    async getCartItemByName(name) { return this.page.locator(this.cartItemSelector, { hasText: name }); }
+  // async below added to show the function returns a promise
+  async getCartItemByName(name) {
+    return this.page.locator(this.cartItemSelector, { hasText: name });
+  }
 
-    async removeCartItemByName(name) {
-        const item = await this.getCartItemByName(name);
-        return item.locator(this.removeItemSelector);
-    }
+  async removeCartItemByName(name) {
+    const item = await this.getCartItemByName(name);
+    return item.locator(this.removeItemSelector);
+  }
 
-    async removeCartItemById(id) {
-        await this.cartItems.nth(id).locator(this.removeItemSelector).click();
-    }
+  async removeCartItemById(id) {
+    await this.cartItems.nth(id).locator(this.removeItemSelector).click();
+  }
 }

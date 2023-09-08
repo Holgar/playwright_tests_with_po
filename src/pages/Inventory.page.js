@@ -1,15 +1,21 @@
-const { BaseSwagLabPage } = require('./BaseSwagLab.page');
+const { BaseSwagLabPage } = require("./BaseSwagLab.page");
 
 export class InventoryPage extends BaseSwagLabPage {
-    url = '/inventory.html';
+  url = "/inventory.html";
 
-    get headerTitle() { return this.page.locator('.title'); } //
+  get headerTitle() {
+    return this.page.locator(".title");
+  } 
 
-    get inventoryItems() { return this.page.locator('.inventory_item'); }
+  get inventoryItems() {
+    return this.page.locator(".inventory_item");
+  }
 
-    get addItemToCartBtns() { return this.page.locator('[id^="add-to-cart"]'); }
+  get addItemToCartBtns() {
+    return this.page.locator('[id^="add-to-cart"]');
+  }
 
-    async addItemToCartById(id) {
-        await this.addItemToCartBtns.nth(id).click();
-    }
+  async addItemToCartById(id) {
+    await this.addItemToCartBtns.nth(id).click();
+  }
 }

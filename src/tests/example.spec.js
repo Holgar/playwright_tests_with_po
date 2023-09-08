@@ -1,20 +1,21 @@
 // @ts-check
 const { expect } = require('@playwright/test');
-const { test } = require('../fixture');
+const { test } = require('../fixture/fixture');
 
 test.describe('', () => {
-    test('Perform login', async ({ loginPage, inventoryPage }) => {
+    test.beforeEach(async ({ loginPage}) => {
         await loginPage.navigate();
         await loginPage.performLogin('standard_user', 'secret_sauce');
+    })
+
+
+    test('Perform login', async ({inventoryPage }) => {
 
         await expect(inventoryPage.headerTitle).toBeVisible();
-
         expect(await inventoryPage.inventoryItems.count()).toBeGreaterThanOrEqual(1);
     });
 
-    test('Add and remove product from the cart', async ({ loginPage, inventoryPage, shopingCartPage }) => {
-        await loginPage.navigate();
-        await loginPage.performLogin('standard_user', 'secret_sauce');
+    test('Add and remove product from the cart', async ({inventoryPage, shopingCartPage }) => {
         await inventoryPage.addItemToCartById(0);
         expect(await inventoryPage.getNumberOfItemsInCart()).toBe('1');
 

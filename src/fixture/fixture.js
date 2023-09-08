@@ -1,7 +1,7 @@
 import { test as base } from '@playwright/test';
-import { LoginPage } from './pages/Login.page';
-import { InventoryPage } from './pages/Inventory.page';
-import { ShopingCartPage } from './pages/ShopingCart.page';
+import { LoginPage } from '../pages/Login.page';
+import { InventoryPage } from '../pages/Inventory.page';
+import { ShopingCartPage } from '../pages/ShopingCart.page';
 
 export const test = base.extend({
     loginPage: async ({ page }, use) => {
