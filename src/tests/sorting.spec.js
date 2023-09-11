@@ -13,7 +13,6 @@ test.describe("Sorting option", () => {
 
   test("Check names of sort options", async ({ inventoryPage }) => {
     const options = await (inventoryPage.selectProductSort).locator("option");
-    console.log(options.allTextContents);
     expect(await options.count()).toBe(4);
 
     const namesOfOption = ['Name (A to Z)Name (Z to A)Price (low to high)Price (high to low)']
@@ -23,7 +22,7 @@ test.describe("Sorting option", () => {
 
   const selectOptions = ["az", "za", "lohi", "hilo"];
   for (const option of selectOptions) {
-    test.only(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
+    test(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
         await (inventoryPage.selectSortDropdown).selectOption(`${option}`);
         const labelElements = await (inventoryPage.inventoryItemName).allTextContents();
         const priceElements = await (inventoryPage.inventoryItemPrice).allTextContents();
