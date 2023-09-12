@@ -1,5 +1,6 @@
 const { expect } = require("@playwright/test");
 const { test } = require("../fixture/fixture");
+const { parsePrice } = require("../helpers/parsePrice")
 
 test.describe("Sorting option", () => {
   test.beforeEach(async ({ loginPage }) => {
@@ -20,28 +21,22 @@ test.describe("Sorting option", () => {
     expect(namesOfOption).toEqual(receivedNames)
   });
 
-  const selectOptions = ["az", "za", "lohi", "hilo"];
-  for (const option of selectOptions) {
-    test(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
-        await (inventoryPage.selectSortDropdown).selectOption(`${option}`);
-        const labelElements = await (inventoryPage.inventoryItemName).allTextContents();
-        const priceElements = await (inventoryPage.inventoryItemPrice).allTextContents();
-        function parsePrice(priceString) {
-          return parseFloat(priceString.replace('$', ''));
-        };
-        if(option === "az"){
-          const alphabeticalSort = [...labelElements].sort();
-          expect(labelElements).toEqual(alphabeticalSort)
-        }else if (option === "za"){
-          const reverseAlphabeticalSort = [...labelElements].sort((a, b) => b.localeCompare(a));
-          expect(labelElements).toEqual(reverseAlphabeticalSort)
-        }else if (option === "lohi"){
-          const lohiSort = priceElements.sort((a, b) => parsePrice(a) - parsePrice(b));
-          expect(priceElements).toEqual(lohiSort);
-        }else if (option === "hilo"){
-          const hiloSort = priceElements.sort((a, b) => parsePrice(b) - parsePrice(a));
-          expect(priceElements).toEqual(hiloSort);
-        }
+  const selectOptions = [
+    { option: "az", sort: (elements) => [...elements].sort() },
+    { option: "za", sort: (elements) => [...elements].sort((a, b) => b.localeCompare(a)) },
+    { option: "lohi", sort: (elements) => elements.sort((a, b) => parsePrice(a) - parsePrice(b)) },
+    { option: "hilo", sort: (elements) => elements.sort((a, b) => parsePrice(b) - parsePrice(a)) }
+  ];
+  
+  for (const {option, sort} of selectOptions) {
+    test.only(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
+      await (inventoryPage.selectSortDropdown).selectOption(`${option}`);
+      const labelElements = await (inventoryPage.inventoryItemName).allTextContents();
+      const priceElements = await (inventoryPage.inventoryItemPrice).allTextContents();
+      const elements = option === "az" || option === "za" ? labelElements : priceElements;
+      const sortedElements = sort(elements);
+      expect(elements).toEqual(sortedElements);
     });
   }
+  
 });
