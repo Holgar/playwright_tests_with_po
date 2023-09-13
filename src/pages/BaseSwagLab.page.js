@@ -17,4 +17,5 @@ export class BaseSwagLabPage extends BasePage {
     async getNumberOfItemsInCart() {
         return this.shopingCartBadge.textContent();
     }
+
 }
