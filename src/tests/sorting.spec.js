@@ -29,7 +29,7 @@ test.describe("Sorting option", () => {
   ];
   
   for (const {option, sort} of selectOptions) {
-    test.only(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
+    test(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
       await (inventoryPage.selectSortDropdown).selectOption(`${option}`);
       const labelElements = await (inventoryPage.inventoryItemName).allTextContents();
       const priceElements = await (inventoryPage.inventoryItemPrice).allTextContents();

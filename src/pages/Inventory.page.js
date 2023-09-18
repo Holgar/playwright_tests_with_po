@@ -43,4 +43,17 @@ export class InventoryPage extends BaseSwagLabPage {
     await this.selectSortDropdown.click();
   }
 
+  async getItemInfoById(id){
+    const item = this.inventoryItems.nth(id);
+    const name = await item.locator('.inventory_item_name').textContent();
+    const desc = await item.locator('.inventory_item_desc').textContent();
+    const price = await item.locator('.inventory_item_price').textContent();
+
+    return {
+        name,
+        desc,
+        price,
+    };
+  }
+
 }

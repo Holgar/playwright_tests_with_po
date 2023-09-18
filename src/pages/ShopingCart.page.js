@@ -28,4 +28,18 @@ export class ShopingCartPage extends BaseSwagLabPage {
   async removeCartItemById(id) {
     await this.cartItems.nth(id).locator(this.removeItemSelector).click();
   }
+
+  async getItemInfoById(id){
+    const item = this.cartItems.nth(id);
+    const name = await item.locator('.inventory_item_name').textContent();
+    const desc = await item.locator('.inventory_item_desc').textContent();
+    const price = await item.locator('.inventory_item_price').textContent();
+
+    return {
+        name,
+        desc,
+        price,
+    };
+  }
+  
 }
