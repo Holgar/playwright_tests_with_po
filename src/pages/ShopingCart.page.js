@@ -30,7 +30,7 @@ export class ShopingCartPage extends InventoryPage {
   }
 
   async getItemInfoById(id){
-    const item = this.cartItems.nth(id); // Зміна item тут
+    const item = this.cartItems.nth(id);
     return super.getItemInfoById(id, item);
   }
 
