@@ -11,7 +11,7 @@ test.describe("Checkout page", () => {
 
     });
 
-    test("Verify checkout flow", async ({ inventoryPage, shopingCartPage, checkoutPage, page}) => {
+    test("Verify checkout flow", async ({ inventoryPage, shopingCartPage, checkoutPage}) => {
         const addedItems = await addRandomItemsToCart(inventoryPage);
         const prices = addedItems.map(product => parsePrice(product.price));
         const totalAdded = prices.reduce((sum, price) => sum + price, 0);
