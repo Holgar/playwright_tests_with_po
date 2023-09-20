@@ -3,13 +3,13 @@ const { test } = require("../fixture/fixture");
 const { addRandomItemsToCart } = require("../helpers/addRandomItems");
 const { getItemsFromCart } = require("../helpers/getItemsFromCart")
 
-test.describe("Sorting option", () => {
+test.describe("Check cart page", () => {
     test.beforeEach(async ({ loginPage }) => {
       await loginPage.navigate();
       await loginPage.performLogin("standard_user", "secret_sauce");
     });
 
-    test.only("Add random items to cart", async ({ inventoryPage, shopingCartPage}) => {
+    test("Add random items to cart", async ({ inventoryPage, shopingCartPage}) => {
       const addedItems = await addRandomItemsToCart(inventoryPage);
       await inventoryPage.shopingCart.click();
       const cartItems = await getItemsFromCart(shopingCartPage);

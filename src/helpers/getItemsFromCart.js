@@ -1,9 +1,9 @@
 const { expect } = require("@playwright/test");
 
-export async function getItemsFromCart(shopingCartPage){
+export async function getItemsFromCart(page){
     const cartItems = [];
-    for (let i = 0; i < await shopingCartPage.cartItems.count(); i++) {
-        let item = await shopingCartPage.getItemInfoById(i);
+    for (let i = 0; i < await page.cartItems.count(); i++) {
+        let item = await page.getItemInfoById(i);
         cartItems.push(item)
     }
     return cartItems;

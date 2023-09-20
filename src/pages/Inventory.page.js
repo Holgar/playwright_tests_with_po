@@ -3,10 +3,6 @@ const { BaseSwagLabPage } = require("./BaseSwagLab.page");
 export class InventoryPage extends BaseSwagLabPage {
   url = "/inventory.html";
 
-  get headerTitle() {
-    return this.page.locator(".title");
-  } 
-
   get inventoryItems() {
     return this.page.locator(".inventory_item");
   }
@@ -43,8 +39,7 @@ export class InventoryPage extends BaseSwagLabPage {
     await this.selectSortDropdown.click();
   }
 
-  async getItemInfoById(id){
-    const item = this.inventoryItems.nth(id);
+  async getItemInfoById(id,item = this.inventoryItems.nth(id)){
     const name = await item.locator('.inventory_item_name').textContent();
     const desc = await item.locator('.inventory_item_desc').textContent();
     const price = await item.locator('.inventory_item_price').textContent();

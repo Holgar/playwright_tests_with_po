@@ -1,11 +1,11 @@
-const { BaseSwagLabPage } = require("./BaseSwagLab.page");
+const { InventoryPage } = require("./Inventory.page");
 
-export class ShopingCartPage extends BaseSwagLabPage {
+export class ShopingCartPage extends InventoryPage {
   url = "/cart.html";
 
   cartItemSelector = ".cart_item";
-
   removeItemSelector = '[id^="remove"]';
+  checkoutSelector = '[id^="checkout"]'
 
   get headerTitle() {
     return this.page.locator(".title");
@@ -13,6 +13,10 @@ export class ShopingCartPage extends BaseSwagLabPage {
 
   get cartItems() {
     return this.page.locator(this.cartItemSelector);
+  }
+
+  get checkoutButton() {
+    return this.page.locator(this.checkoutSelector);
   }
 
   // async below added to show the function returns a promise
@@ -31,15 +35,11 @@ export class ShopingCartPage extends BaseSwagLabPage {
 
   async getItemInfoById(id){
     const item = this.cartItems.nth(id);
-    const name = await item.locator('.inventory_item_name').textContent();
-    const desc = await item.locator('.inventory_item_desc').textContent();
-    const price = await item.locator('.inventory_item_price').textContent();
+    return super.getItemInfoById(id, item)
+  }
 
-    return {
-        name,
-        desc,
-        price,
-    };
+  async clickOnCheckout() {
+    await this.checkoutButton.click();
   }
   
 }
