@@ -1,6 +1,5 @@
 const { ShopingCartPage } = require("./ShopingCart.page");
-const { createRandomUser }  = require("../helpers/fakeData");
-const { parsePrice } = require("../helpers/parsePrice");
+const { createRandomUser, parsePrice }  = require("../helpers/helpers");
 
 
 export class CheckoutPage extends ShopingCartPage {
@@ -29,8 +28,7 @@ export class CheckoutPage extends ShopingCartPage {
     return this.page.locator('.summary_total_label')
   }
 
-  async fillData() {
-    const user = createRandomUser();
+  async fillUserData(user = createRandomUser()) {
     await this.firstName.fill(user.firstName);
     await this.lastName.fill(user.lastName);
     await this.postalCode.fill(user.postalCode);
@@ -40,11 +38,11 @@ export class CheckoutPage extends ShopingCartPage {
     return this.continueButton.click()
   }
 
-  async taxNumber(){
+  async getTaxValue(){
     return parsePrice(await this.tax.textContent())
   }
 
-  async totalPriceNumber(){
+  async getTotalPriceValue(){
     return parsePrice(await this.totalPrice.textContent())
   }
 

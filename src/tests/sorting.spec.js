@@ -1,6 +1,7 @@
 const { expect } = require("@playwright/test");
 const { test } = require("../fixture/fixture");
-const { parsePrice } = require("../helpers/parsePrice")
+const { parsePrice } = require("../helpers/helpers");
+
 
 test.describe("Sorting option", () => {
   test.beforeEach(async ({ loginPage }) => {

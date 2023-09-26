@@ -42,4 +42,13 @@ export class ShopingCartPage extends InventoryPage {
     await this.checkoutButton.click();
   }
   
+  async getItemsFromCart(){
+    const cartItems = [];
+    for (let i = 0; i < await this.cartItems.count(); i++) {
+        let item = await this.getItemInfoById(i);
+        cartItems.push(item)
+    }
+    return cartItems;
+} 
+
 }
