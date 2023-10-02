@@ -1,6 +1,7 @@
 const { expect } = require("@playwright/test");
 const { test } = require("../fixture/fixture");
-const { parsePrice } = require("../helpers/parsePrice")
+const { parsePrice } = require("../helpers/helpers");
+
 
 test.describe("Sorting option", () => {
   test.beforeEach(async ({ loginPage }) => {
@@ -29,7 +30,7 @@ test.describe("Sorting option", () => {
   ];
   
   for (const {option, sort} of selectOptions) {
-    test.only(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
+    test(`Parameterized selecting option with ${option}`, async ({inventoryPage}) => {
       await (inventoryPage.selectSortDropdown).selectOption(`${option}`);
       const labelElements = await (inventoryPage.inventoryItemName).allTextContents();
       const priceElements = await (inventoryPage.inventoryItemPrice).allTextContents();

@@ -3,10 +3,6 @@ const { BaseSwagLabPage } = require("./BaseSwagLab.page");
 export class InventoryPage extends BaseSwagLabPage {
   url = "/inventory.html";
 
-  get headerTitle() {
-    return this.page.locator(".title");
-  } 
-
   get inventoryItems() {
     return this.page.locator(".inventory_item");
   }
@@ -41,6 +37,39 @@ export class InventoryPage extends BaseSwagLabPage {
 
   async clickOnSort(){
     await this.selectSortDropdown.click();
+  }
+
+  async getItemInfoById(id,item = this.inventoryItems.nth(id)){
+    const name = await item.locator('.inventory_item_name').textContent();
+    const desc = await item.locator('.inventory_item_desc').textContent();
+    const price = await item.locator('.inventory_item_price').textContent();
+
+    return {
+        name,
+        desc,
+        price,
+    };
+  }
+
+  async addRandomItemsToCart() {
+    const itemsNumber = await (this.inventoryItems).count();
+    let randomNumber = Math.floor(Math.random() * itemsNumber) + 1;
+    console.log(`Adding ${randomNumber} items to the cart.`);
+    let addedItems = 0;
+    let addedItemsInfo = [];
+    while (addedItems < randomNumber){
+        let randomIndex = Math.floor(Math.random() * itemsNumber);
+        let item = await this.inventoryItems.nth(randomIndex);
+        let itemToCartButton = await item.locator('[id^="add-to-cart"]');
+        let hasRemoveButton = await item.locator('[id^="remove"]').isVisible();
+        if(!hasRemoveButton){
+            await itemToCartButton.click();
+            console.log(`Item ${randomIndex} added to the cart.`);
+            addedItemsInfo.push(await this.getItemInfoById(randomIndex))
+            addedItems++;
+        };
+    }
+    return addedItemsInfo
   }
 
 }
