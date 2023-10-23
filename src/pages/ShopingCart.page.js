@@ -33,9 +33,8 @@ export class ShopingCartPage extends InventoryPage {
     await this.cartItems.nth(id).locator(this.removeItemSelector).click();
   }
 
-  async getItemInfoById(id){
-    const item = this.cartItems.nth(id);
-    return super.getItemInfoById(id, item)
+  async getItem(id){
+    return await this.cartItems.nth(id);
   }
 
   async clickOnCheckout() {
