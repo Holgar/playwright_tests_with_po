@@ -17,14 +17,13 @@ test.describe("Checkout page", () => {
 
     });
 
-    test.only("Verify checkout flow", async ({checkoutPage}) => {
+    test("Verify checkout flow", async ({checkoutPage}) => {
         await checkoutPage.fillUserData();
         await checkoutPage.clickOnContinueButton();      
         const cartItems = await checkoutPage.getItemsFromCart();
         expect(addedItems).toEqual(cartItems);
-        const addedItemsWithTax = await checkoutPage.getTaxValue() + totalAdded;
-        const fixedPrice = Number(addedItemsWithTax.toFixed(2));
+        const addedItemsWithTax = Number((await checkoutPage.getTaxValue() + totalAdded).toFixed(2));
         const checkoutItemTotal = await checkoutPage.getTotalPriceValue();
-        expect(fixedPrice).toEqual(checkoutItemTotal)
+        expect(addedItemsWithTax).toEqual(checkoutItemTotal)
     })
 });
