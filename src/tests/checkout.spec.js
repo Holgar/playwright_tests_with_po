@@ -1,6 +1,6 @@
 const { expect } = require("@playwright/test");
 const { test } = require("../fixture/fixture");
-const { addRandomItemsToCart, getItemsFromCart, parsePrice } = require("../helpers/helpers");
+const { parsePrice } = require("../helpers/helpers");
 
 test.describe("Checkout page", () => {
 
