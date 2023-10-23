@@ -1,6 +1,6 @@
 const { expect } = require("@playwright/test");
 const { test } = require("../fixture/fixture");
-const { addRandomItemsToCart, getItemsFromCart} = require("../helpers/helpers");
+// const { addRandomItemsToCart, getItemsFromCart} = require("../helpers/helpers");
 
 test.describe("Check cart page", () => {
     test.beforeEach(async ({ loginPage }) => {
